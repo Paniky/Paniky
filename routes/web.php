@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ComicController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +14,9 @@ use App\Http\Controllers\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('comics',[ComicController::class,'index']);
+Route::get('comics',[ComicController::class,'listAllComics']);
+Route::get('novels',[ComicController::class,'listAllNovels']);
+Route::get('search',[SearchController::class,'Search']);
 Route::get('/comics/cover/{releasePath}', function ($releasePath)
 {
     $path = storage_path() . '/app/editorial/comic/'.$releasePath.'/presentation/cover.jpg';
@@ -72,5 +75,6 @@ Route::post('/user/register/action',[AuthorController::class,'store']);
 Route::post('/user/login/action',[UserController::class,'login']);
 Route::get('/comics/create', [ComicController::class,'createComic']);
 Route::post('/comics/create/action', [ComicController::class,'store']);
+Route::get('/novels/{comic}', [ComicController::class,'show']);
 Route::get('/comics/{comic}', [ComicController::class,'show']);
 

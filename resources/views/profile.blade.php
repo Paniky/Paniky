@@ -12,16 +12,57 @@
 			width: 100%;
 			margin: 0 auto;
 		}
-		.menu-item{
-			width: 10%;
-			float: right;
-			color: white;
-		}
-		#header-menu{
-			height: 12%;
-			width: 100%;
-			margin: 0;
-		}
+		 #header-menu{
+              width:100%;
+              height:15%;
+              display:flex;
+              flex-direction: row;
+              align-items:center;
+              justify-content:center;
+              font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+            }
+            .menu-item{
+              color:white;
+              flex:1;
+              height:20%;
+
+            }
+            		.search-bar{
+            		    flex:3;
+            		}
+            		.search {
+            		  font-family: 'Open Sans', sans-serif;
+                      width: 100%;
+                      display: flex;
+                    }
+
+                    .searchTerm {
+                      width: 100%;
+                      border: 1px solid grey;
+                      border-right: none;
+                      padding: 5px;
+                      height: 20%;
+                      border-radius: 5px 0 0 5px;
+                      outline: none;
+                      color: grey;
+
+                    }
+
+                    .searchTerm:focus{
+                      color: #00B4CC;
+                    }
+
+                    .searchButton {
+                      width: 40px;
+                      height: 36px;
+                      border: 1px solid black;
+                      background: black;
+                      text-align: center;
+                      color: white;
+                      border-radius: 0 5px 5px 0;
+                      cursor: pointer;
+                      font-size: 20px;
+                    }
 		#profile{
 			font-family: Arial, Helvetica, sans-serif;
 			width: 55%;
@@ -56,7 +97,7 @@
 		#web-link{
 			float: left;
 			margin-right: 1%;
-			
+
 		}
 		#locatoin-link{
 			float: left;
@@ -85,29 +126,43 @@
 	</style>
 </head>
 <body>
-	<div id="header-menu" style="background-color: black;display: inline-block;">
-		<div class="menu-item">profile</div>
-		<div class="menu-item">Publica</div>
-		<div class="menu-item">Mercancía</div>
-		<div class="menu-item">Novelas</div>
-		<div class="menu-item">Comics</div>
-		<div class="menu-item">PANIKY</div>
-	</div>
+	<div id="header-menu" style="background-color: black;">
+            <div class="menu-item">
+
+            </div>
+            <div class="menu-item" onclick="window.location.replace('/')">PANIKY</div>
+            <div class="menu-item" onclick="window.location.replace('comics')">Comics</div>
+            <div class="menu-item" onclick="window.location.replace('novels')">Novelas</div>
+            <div class="menu-item">Mercancía</div>
+            <div class="menu-item">Publica</div>
+    		<div class="menu-item" style="flex:2;" onclick="window.location.replace('/{{session('usid')}}')">{{session('usname')}}</div>
+    		<div class="menu-item search-bar">
+    		    <div class="search">
+                    <input type="text" class="searchTerm" placeholder="Buscar comic, novela o autores">
+                    <button type="submit" class="searchButton">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="menu-item">
+
+            </div>
+    	</div>
 	<div id="profile">
-	
+
 	@if(empty($profile))
 		<h2>Equivocado pa</h2>
 	@endif
 
-			
-			<div id="portada"> 
+
+			<div id="portada">
 				<img src="{{url('lands/'.$profile[1][0]->auimgfr)}}" style="background-size: cover;" alt="{{$profile[1][0]->auimgfr}}">
 				<div id="followers" style="position: absolute;">{{$profile[2][0]->followers}} seguidores</div>
-				
+
 			</div>
 			<div id="author-data">
 				<div style="width:100%:">
-					<div style="width: 20%;height: 80%;float: left;"> 
+					<div style="width: 20%;height: 80%;float: left;">
 						<img src="{{url('profiles/'.$profile[0][0]->usimgpro)}}" style="max-width: 100%;max-height: 100%;">
 					</div>
 					<h1 id="author-name">{{$profile[0][0]->usname}}</h1>
@@ -126,18 +181,18 @@
 				<h4>User id: {{$profile[0][0]->usid}}</h4>
 				<p>User email: {{$profile[0][0]->usmail}}</p>
 				<h4>Author id: {{$profile[1][0]->auid}}</h4>-->
-				
+
 				<div id="web-link-cont">
 					<span class="links-external" id="web-link"><i class="fa fa-external-link" style="margin-right: 3%"></i>{{$profile[1][0]->auwebs}}</span>
 					<span class="links-external" id="location-link"><i class="fas fa-map-marker-alt" style="margin-right: 2%;color: black">  </i>{{$profile[1][0]->auloc}}</span>
 				</div>
-				
+
 				<div id="description">
 					<p> {{$profile[1][0]->audesc}}</p>
 				</div>
 			</div>
-		
-	
+
+
 	</div>
 </body>
 </html>

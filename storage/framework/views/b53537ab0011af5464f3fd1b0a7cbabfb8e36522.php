@@ -36,11 +36,13 @@
 				<option value="2">One Shot</option>
 			</select><br><br>
 			<label>Categoria</label>
-			<select name="autitle">
+			<select name="cat">
 				<?php $__currentLoopData = $cats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $c): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 				<option value="<?php echo e($c->catid); ?>"><?php echo e($c->catname); ?></option>
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			</select>
+			<br><br>
+			<label>Etiqueta: </label><input type="text" name="ctag">
 			<label>Tipo de redacción: </label><br>
 			<select name="comickind">
 				<option value="1">Comic</option>
