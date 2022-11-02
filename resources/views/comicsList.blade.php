@@ -71,12 +71,12 @@ html,body{
         <div class="menu-item">Publica</div>
 		<div class="menu-item" style="flex:2;" onclick="window.location.replace('/{{session('usid')}}')">{{session('usname')}}</div>
 		<div class="menu-item search-bar">
-		    <div class="search">
-                <input type="text" class="searchTerm" placeholder="Buscar comic, novela o autores">
+		    <form class="search" action="/search">
+                <input type="text" class="searchTerm" placeholder="Buscar comic, novela o autores" name="search_query">
                 <button type="submit" class="searchButton">
                     <i class="fa fa-search"></i>
                 </button>
-            </div>
+            </form>
         </div>
         <div class="menu-item">
 

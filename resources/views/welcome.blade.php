@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>LOGIN - PANIKY</title>
-    
-    @if(!empty(session('usid')) && null !== session('usid') && 
+
+    @if(!empty(session('usid')) && null !== session('usid') &&
     !empty(session('ustype')) && null !== session('ustype'))
         <script type="text/javascript">
             window.location.replace('http://test.paniky.com/{{session('usid')}}');
         </script>
-        
+
     @endif
     <style type="text/css">
         html,body{
@@ -26,14 +26,14 @@
             flex-direction: row;
             font-family: Arial, Helvetica, sans-serif;
         }
-        
+
         #login-column{
             margin-top: 5%;
             flex: 2;
             height: 80%;
             display: flex;
             flex-direction: column;
-            justify-items: ;
+            justify-items: center;
             align-items: center;
         }
         #blank-space-main{
@@ -75,7 +75,7 @@
             color: white;
             font-size: 15px;
             font-weight: bold;
-            border: none; 
+            border: none;
         }
         input[type='submit']{
             background-color: #0c0c0c;
@@ -86,7 +86,7 @@
     </style>
 </head>
 <body>
-    
+
     <div id="login-container">
         <div id="left-span"></div>
         <div id="login-column">
@@ -94,7 +94,7 @@
                 <div><p style="flex:1;font-size: 250%;font-weight: bold;">PANIKY</p></div>
                 <div><p style="flex:1;font-size: 150%;font-weight: bold;">Únete a la comunidad de artistas del horror mas grande de latinoamérica</p></div>
             </div>
-            
+
             <div id="form-container">
                 <form action="user/login/action" method="POST">
                     @csrf
@@ -108,6 +108,6 @@
         </div>
         <div id="blank-space-main">a</div>
     </div>
-    
+
 </body>
 </html>

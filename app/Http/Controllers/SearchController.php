@@ -14,8 +14,8 @@ class SearchController extends Controller
      */
     public function search(Request $req){
         $resultData = $this->doSearchOf($req->query('search_query'));
-        return dd($resultData);
-        //return view('comicsList',['comics'=>$resultData]);
+        //return dd($resultData);
+        return view('search',['results'=>$resultData,'term'=>$req->query('search_query')]);
     }
 
 
