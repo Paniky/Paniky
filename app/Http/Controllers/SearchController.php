@@ -26,7 +26,7 @@ class SearchController extends Controller
         $results['comics'] = $this->getMatchWith($term,'tb_comic_test','comicaproved = 1 and comickind = 1 and lower(comicname) REGEXP lower("[[:<:]]'.$term.'[[:>:]]")');
         $results['novels'] = $this->getMatchWith($term,'tb_comic_test','comicaproved = 1 and comickind = 2 and lower(comicname) REGEXP lower("[[:<:]]'.$term.'[[:>:]]")');
         $results['authors'] = $this->getMatchWith($term,'tb_user','lower(usname) REGEXP lower("[[:<:]]'.$term.'[[:>:]]")');
-        $results['users'] = $this->getMatchWith($term,'tb_user','lower(usnamepro) REGEXP lower("[[:<:]]'.$term.'[[:>:]]")');
+        $results['users'] = $this->getMatchWith($term,'tb_user','lower(usnamepro) LIKE lower("%'.$term.'%")');
         return $results;
     }
 
@@ -62,115 +62,5 @@ class SearchController extends Controller
         }
         return $resultData;
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-
-        $wasInserted = false;
-        $comic = new Comic();
-        $comic->id = $comic->genId();
-        /*$request->validate([
-            'usimgpro' => 'required|image|mimes:png,jpg,jpeg|max:2048',
-            'auimagfr' => 'required|image|mimes:png,jpg,jpeg|max:2048',
-        ]);*/
-
-        $cover = 'cover.'.$request->cover->extension();
-        $portada = 'port.'.$request->portada->extension();
-
-        // Public Folder
-        //$request->usimgpro->move(public_path('images'), $usimgpro);
-        //$request->portada->move(public_path('images'), $portada);
-
-        // //Store in Storage Folder
-        //Storage::disk('profiles')->put($usimgpro,'Contents');
-        //Storage::disk('profiles')->put($portada,'Contents');
-        $path = 'comic/'.$comic->id.'/presentation';
-        //return $path.'/'.$cover;
-        $request->cover->storeAs($path, $cover, 'editorial');
-        $request->portada->storeAs($path, $portada, 'editorial');
-        //return redirect('/pfp/'.$cover);
-        $comic->title = $request->input('comicname');
-        $comic->description = $request->input('comicdesc');
-        $comic->nextDate = $request->input('comicnext');
-        $comic->emitionType = $request->input('comictype');
-        $comic->emitionKind = $request->input('comickind');
-        $comic_inserted = DB::insert("insert into tb_comic_test values(?,?,?,?,?,?,?,?)",[$comic->id,$comic->title,1,$comic->emitionType,$comic->emitionKind,$comic->description,$comic->nextDate,1]);
-        if($comic_inserted ==1){
-            $insertAuthor = 'INSERT INTO comic_author VALUES(?,?)';
-            $insertedAuthor = DB::insert($insertAuthor,[session('auid'),$comic->id]);
-            if($insertedAuthor == 1){
-
-            }
-        }
-
-    }
-    public function createComic(){
-        $getCats = "SELECT * FROM tb_categories";
-        $cats = DB::select($getCats);
-        return view('createComic',['cats'=>$cats]);
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Comic  $comic
-     * @return \Illuminate\Http\Response
-     */
-    public function show($comic){
-        $getComic = 'SELECT * FROM tb_comic_test WHERE comicid = ?';
-        $comic = DB::select($getComic,[$comic]);
-        return $comic[0]->comicname;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Comic  $comic
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Comic $comic)
-    {
-        //
-        return "edit ola";
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Comic  $comic
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Comic $comic)
-    {
-        //
-        return "update ola";
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Comic  $comic
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Comic $comic)
-    {
-        //
-        return "destroy ola";
-    }
 }
